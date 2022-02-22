@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table(name = "currency")
 public class Currency {
     @Id
-    private UUID id;
+    private UUID currencyId;
     private String name;
 
     @Column(unique = true)
@@ -26,5 +26,5 @@ public class Currency {
 
     private float currentPrice;
     private boolean isEnabled;
-    private LocalDateTime createdTime;
+    private LocalDateTime creationTime;
 }
