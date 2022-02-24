@@ -35,6 +35,12 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
+    public Currency getCurrency(UUID currencyId) {
+        return currencyRepository.findCurrencyByCurrencyId(currencyId).orElseThrow(() -> new NoSuchCurrencyException(
+            currencyId.toString()));
+    }
+
+    @Override
     @Transactional
     public UUID addCurrency(Currency currency) {
         convertSymbolToAllCaps(currency);
@@ -83,5 +89,11 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Transactional
     public void deleteCurrency(String symbol) {
         currencyRepository.deleteCurrencyBySymbol(symbol).orElseThrow(() -> new NoSuchCurrencyException(symbol));
+    }
+
+    @Override
+    @Transactional
+    public void deleteCurrency(UUID currencyId) {
+        currencyRepository.deleteCurrencyByCurrencyId(currencyId).orElseThrow(() -> new NoSuchCurrencyException(currencyId.toString()));
     }
 }

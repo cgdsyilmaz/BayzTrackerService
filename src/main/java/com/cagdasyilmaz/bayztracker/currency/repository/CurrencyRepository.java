@@ -10,5 +10,7 @@ import java.util.UUID;
 @Repository
 public interface CurrencyRepository extends JpaRepository<Currency, UUID> {
 	Optional<Currency> findCurrencyBySymbol(String symbol);
+	Optional<Currency> findCurrencyByCurrencyId(UUID currencyId);
 	Optional<Currency> deleteCurrencyBySymbol(String symbol);
+	Optional<Currency> deleteCurrencyByCurrencyId(UUID currencyId);
 }
