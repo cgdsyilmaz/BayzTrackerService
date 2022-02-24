@@ -13,9 +13,9 @@ public class CurrencyCreateRequest {
 	@NotBlank(message = CurrencyValidationConstraints.SYMBOL_NOT_VALID_MESSAGE)
 	private String symbol;
 
-	@NotNull(message = CurrencyValidationConstraints.CURRENT_PRICE_NULL)
+	@NotNull(message = CurrencyValidationConstraints.CURRENT_PRICE_NULL_MESSAGE)
 	private Float currentPrice;
 
-	@NotNull(message = CurrencyValidationConstraints.ENABLED_NULL)
-	private boolean isEnabled;
+	@NotNull(message = CurrencyValidationConstraints.ENABLED_NULL_MESSAGE)
+	private Boolean isEnabled;
 }
