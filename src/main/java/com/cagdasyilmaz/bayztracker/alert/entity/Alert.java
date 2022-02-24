@@ -21,5 +21,5 @@ public class Alert {
 	private String currency;
 	private float targetPrice;
 	private LocalDateTime createdAt;
-	private AlarmStatus status;
+	private AlertStatus status;
 }
