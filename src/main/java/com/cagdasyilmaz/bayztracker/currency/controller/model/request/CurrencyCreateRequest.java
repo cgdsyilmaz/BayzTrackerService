@@ -1,7 +1,8 @@
-package com.cagdasyilmaz.bayztracker.currency.controller.model;
+package com.cagdasyilmaz.bayztracker.currency.controller.model.request;
 
 import com.cagdasyilmaz.bayztracker.currency.util.CurrencyValidationConstraints;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -12,5 +13,9 @@ public class CurrencyCreateRequest {
 	@NotBlank(message = CurrencyValidationConstraints.SYMBOL_NOT_VALID_MESSAGE)
 	private String symbol;
 
-	private float currentPrice;
+	@NotNull(message = CurrencyValidationConstraints.CURRENT_PRICE_NULL)
+	private Float currentPrice;
+
+	@NotNull(message = CurrencyValidationConstraints.ENABLED_NULL)
+	private boolean isEnabled;
 }

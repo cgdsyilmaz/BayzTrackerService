@@ -1,5 +1,6 @@
 package com.cagdasyilmaz.bayztracker.currency.controller.mapper;
 
+import com.cagdasyilmaz.bayztracker.currency.controller.model.request.CurrencyCreateRequest;
 import com.cagdasyilmaz.bayztracker.currency.controller.model.response.CurrencyResponse;
 import com.cagdasyilmaz.bayztracker.currency.entity.Currency;
 import org.modelmapper.ModelMapper;
@@ -15,5 +16,9 @@ public class CurrencyMapper {
 
 	public static CurrencyResponse mapCurrencyToCurrencyResponse(Currency currency) {
 		return modelMapper.map(currency, CurrencyResponse.class);
+	}
+
+	public static Currency mapCurrencyCreateRequestToCurrency(CurrencyCreateRequest currencyToAdd) {
+		return modelMapper.map(currencyToAdd, Currency.class);
 	}
 }
