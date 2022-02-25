@@ -5,6 +5,7 @@ import com.cagdasyilmaz.bayztracker.alert.exception.NoSuchAlertException;
 import com.cagdasyilmaz.bayztracker.currency.exception.CurrencyAlreadyExistsException;
 import com.cagdasyilmaz.bayztracker.currency.exception.CurrencyException;
 import com.cagdasyilmaz.bayztracker.currency.exception.NoSuchCurrencyException;
+import com.cagdasyilmaz.bayztracker.user.exception.UserException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,10 @@ public class BayzTrackerExceptionHandler extends ResponseEntityExceptionHandler 
 	@ExceptionHandler({CurrencyException.class, AlertException.class})
 	public ResponseEntity<Object> handleRemainingExceptions(RuntimeException exception, WebRequest webRequest) {
 		return handleExceptionInternal(exception, exception.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, webRequest);
+	}
+
+	@ExceptionHandler({UserException.class})
+	public ResponseEntity<Object> handleUserException(RuntimeException exception, WebRequest webRequest) {
+		return handleExceptionInternal(exception, exception.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN, webRequest);
 	}
 }
