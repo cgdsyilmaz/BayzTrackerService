@@ -7,6 +7,7 @@ import com.cagdasyilmaz.bayztracker.alert.exception.InvalidAlertTargetPriceExcep
 import com.cagdasyilmaz.bayztracker.alert.exception.NoSuchAlertException;
 import com.cagdasyilmaz.bayztracker.alert.repository.AlertRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,11 @@ public class AlertServiceImpl implements AlertService {
 	@Override
 	public Alert getAlert(UUID alertId) {
 		return alertRepository.findAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
+	}
+
+	@Override
+	public List<Alert> getAlerts() {
+		return alertRepository.findAll();
 	}
 
 	@Override
@@ -77,6 +83,17 @@ public class AlertServiceImpl implements AlertService {
 	@Override
 	@Transactional
 	public void acknowledgeAlert(UUID alertId) {
+		Alert alert = alertRepository.findAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
+
+		if (alert.getStatus() != AlertStatus.TRIGGERED) {
+			throw new IllegalAlertStatusChangeException(alert.getStatus().getAlertText(), AlertStatus.CANCELLED.getAlertText());
+		}
+
+		alert.setStatus(AlertStatus.ACKED);
+	}
+
+	@Override
+	public void triggerAlert(UUID alertId) {
 		Alert alert = alertRepository.findAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
 
 		if (alert.getStatus() != AlertStatus.TRIGGERED) {
