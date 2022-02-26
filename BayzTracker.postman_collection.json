@@ -1,0 +1,508 @@
+{
+	"info": {
+		"_postman_id": "1d714766-8d3d-41cb-8e1a-af90ac2680f1",
+		"name": "BayzTracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Add admin role",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/roles/add/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"roles",
+								"add",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add user role",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/roles/add/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"roles",
+								"add",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Admin User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"cagdasyilmaz2\",\r\n    \"password\":\"locomotor\",\r\n    \"isAdmin\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"cagdasyilmaz\",\r\n    \"password\":\"locomotor\",\r\n    \"isAdmin\":false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"cagdasyilmaz2\",\r\n    \"password\":\"locomotor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Currency",
+			"item": [
+				{
+					"name": "Add Bitcoin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Bitcoin\",\r\n    \"symbol\":\"BTC\",\r\n    \"currentPrice\":40000,\r\n    \"isEnabled\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/currencies/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"currencies",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Ceek",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Ceek VR\",\r\n    \"symbol\":\"CEEK\",\r\n    \"currentPrice\":0.55,\r\n    \"isEnabled\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/currencies/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"currencies",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Etherium",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Etherium\",\r\n    \"symbol\":\"ETH\",\r\n    \"currentPrice\":4000,\r\n    \"isEnabled\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/currencies/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"currencies",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bitcoin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/currencies/btc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"currencies",
+								"btc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all currencies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/currencies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"currencies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List BTC only",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/currencies/btc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"currencies",
+								"btc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alert",
+			"item": [
+				{
+					"name": "Get an alert",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/alerts/e2293ef0-02f8-449d-bb9f-7c10f3bece51",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"alerts",
+								"e2293ef0-02f8-449d-bb9f-7c10f3bece51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create an alert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\":\"btc\",\r\n    \"targetPrice\":55000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/alerts/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"alerts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit an alert",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"targetPrice\":39000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/alerts/edit/34610320-2214-45ce-9b02-272fe967afec",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"alerts",
+								"edit",
+								"34610320-2214-45ce-9b02-272fe967afec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an alert",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/alerts/e2293ef0-02f8-449d-bb9f-7c10f3bece51",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"alerts",
+								"e2293ef0-02f8-449d-bb9f-7c10f3bece51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel an Alert",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/alerts/cancel/34610320-2214-45ce-9b02-272fe967afec",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"alerts",
+								"cancel",
+								"34610320-2214-45ce-9b02-272fe967afec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Acknowledge an Alert",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/alerts/ack/34610320-2214-45ce-9b02-272fe967afec",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"alerts",
+								"ack",
+								"34610320-2214-45ce-9b02-272fe967afec"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWdkYXN5aWxtYXoyIiwiZXhwIjoxNjQ1ODc0NTMwfQ.qYVwkL-Ev-my-I4fMm0OucszxS-9INWpPz3nQgEv_Y36ImnUvwkN3PGp-UmVtutk7D-Hut3SEoXpvcT4taom6w"
+		}
+	]
+}
