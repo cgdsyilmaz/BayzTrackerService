@@ -1,7 +1,8 @@
 package com.cagdasyilmaz.bayztracker.user.service;
 
 import com.cagdasyilmaz.bayztracker.user.entity.User;
+import java.util.UUID;
 
 public interface UserService {
-    User getUserByUsername(String username);
+	UUID registerUser(User user);
 }

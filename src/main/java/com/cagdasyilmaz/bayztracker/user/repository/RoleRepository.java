@@ -1,12 +1,11 @@
 package com.cagdasyilmaz.bayztracker.user.repository;
 
 import com.cagdasyilmaz.bayztracker.user.entity.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
+import com.cagdasyilmaz.bayztracker.user.entity.RoleType;
 import java.util.Optional;
+import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface RoleRepository extends JpaRepository<Role, Integer> {
-    Optional<Role> findRoleByRoleName(String roleName);
+public interface RoleRepository extends JpaRepository<Role, UUID> {
+	Optional<Role> findRoleByRoleName(RoleType roleName);
 }

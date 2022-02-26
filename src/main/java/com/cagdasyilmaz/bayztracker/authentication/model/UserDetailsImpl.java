@@ -1,43 +1,32 @@
 package com.cagdasyilmaz.bayztracker.authentication.model;
 
-import com.cagdasyilmaz.bayztracker.user.entity.Role;
-import com.cagdasyilmaz.bayztracker.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
+@Data
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-    private User user;
-
-    public UserDetailsImpl(User user) {
-        this.user = user;
-    }
-
+    private String username;
+    @JsonIgnore
+    private String password;
+    private Collection<? extends GrantedAuthority> authorities;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Role> roles = user.getRoles();
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        }
-
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return username;
     }
 
     @Override

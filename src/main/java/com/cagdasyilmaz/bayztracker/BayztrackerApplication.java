@@ -13,10 +13,11 @@ public class BayztrackerApplication {
 		SpringApplication.run(BayztrackerApplication.class, args);
 	}
 
-	@Bean public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
 	@Bean
 	public ModelMapper modelMapper() {return new ModelMapper();}
+
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

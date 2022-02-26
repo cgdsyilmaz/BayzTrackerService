@@ -1,29 +1,36 @@
 package com.cagdasyilmaz.bayztracker.authentication.configuration.filter;
 
+import static com.cagdasyilmaz.bayztracker.authentication.util.JwtConstants.HEADER_STRING;
+import static com.cagdasyilmaz.bayztracker.authentication.util.JwtConstants.TOKEN_PREFIX;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.cagdasyilmaz.bayztracker.authentication.model.JWTProperties;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static com.cagdasyilmaz.bayztracker.authentication.util.JWTConstants.HEADER_STRING;
-import static com.cagdasyilmaz.bayztracker.authentication.util.JWTConstants.TOKEN_PREFIX;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private final JWTProperties jwtProperties;
+    private final UserDetailsService userDetailsService;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTProperties jwtProperties) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JWTProperties jwtProperties ) {
         super(authenticationManager);
+        this.userDetailsService = userDetailsService;
         this.jwtProperties = jwtProperties;
     }
 
@@ -51,18 +58,26 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             // parse the token.
             String user = JWT.require(Algorithm.HMAC512(jwtProperties.getSecret().getBytes()))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""))
-                    .getSubject();
+                .build()
+                .verify(token.replace(TOKEN_PREFIX, ""))
+                .getSubject();
 
             if (user != null) {
                 // new arraylist means authorities
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                return new UsernamePasswordAuthenticationToken(user, null, getAuthorities(userDetailsService.loadUserByUsername(user)));
             }
 
             return null;
         }
 
         return null;
+    }
+
+    private Collection<? extends GrantedAuthority> getAuthorities(UserDetails userDetails) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        userDetails.getAuthorities().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getAuthority()));
+        });
+        return authorities;
     }
 }
