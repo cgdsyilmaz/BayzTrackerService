@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,26 +44,17 @@ public class CurrencyController {
         return ResponseEntity.ok().body(CurrencyMapper.mapCurrencyToCurrencyResponse(currencyService.getCurrency(symbol.toUpperCase())));
     }
 
-	@GetMapping("/{currencyId}")
-	public ResponseEntity<CurrencyResponse> getCurrency(@PathVariable UUID currencyId) {
-		return ResponseEntity.ok().body(CurrencyMapper.mapCurrencyToCurrencyResponse(currencyService.getCurrency(currencyId)));
-	}
-
     @PostMapping("/add")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> addCurrency(@RequestBody @Validated CurrencyCreateRequest currencyCreateRequest) {
     	UUID currencyId = currencyService.addCurrency(CurrencyMapper.mapCurrencyCreateRequestToCurrency(currencyCreateRequest));
     	return ResponseEntity.created(URI.create("/v1/currencies/" + currencyId)).build();
 	}
 
 	@DeleteMapping("/{symbol}")
+	@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteCurrency(@PathVariable String symbol) {
         currencyService.deleteCurrency(symbol.toUpperCase());
         return ResponseEntity.ok().build();
     }
-
-	@DeleteMapping("/{currencyId}")
-	public ResponseEntity<String> deleteCurrency(@PathVariable UUID currencyId) {
-		currencyService.deleteCurrency(currencyId);
-		return ResponseEntity.ok().build();
-	}
 }

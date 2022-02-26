@@ -9,7 +9,6 @@ import com.cagdasyilmaz.bayztracker.currency.repository.CurrencyRepository;
 import com.cagdasyilmaz.bayztracker.currency.util.CurrencyUtil;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

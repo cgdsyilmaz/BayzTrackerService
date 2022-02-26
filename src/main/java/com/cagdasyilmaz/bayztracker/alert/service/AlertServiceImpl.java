@@ -21,8 +21,8 @@ public class AlertServiceImpl implements AlertService {
 	}
 
 	@Override
-	public Alert getAlert(UUID alertId) {
-		return alertRepository.findAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
+	public Alert getAlert(UUID alertId, String username) {
+		return alertRepository.findAlertByAlertIdAndUsername(alertId, username).orElseThrow(() -> new NoSuchAlertException(alertId));
 	}
 
 	@Override
@@ -32,9 +32,9 @@ public class AlertServiceImpl implements AlertService {
 
 	@Override
 	@Transactional
-	public UUID createAlert(Alert alert) {
+	public UUID createAlert(Alert alert, String username) {
 		validatePrice(alert.getTargetPrice());
-		setAlertIdAndDate(alert);
+		setAlertProperties(alert, username);
 
 		alertRepository.save(alert);
 		return alert.getAlertId();
@@ -46,17 +46,20 @@ public class AlertServiceImpl implements AlertService {
 		}
 	}
 
-	private void setAlertIdAndDate(Alert alert) {
+	private void setAlertProperties(Alert alert, String username) {
+		alert.setCurrency(alert.getCurrency().toUpperCase());
 		alert.setAlertId(UUID.randomUUID());
 		alert.setCreatedAt(LocalDateTime.now());
+		alert.setUsername(username);
+		alert.setStatus(AlertStatus.NEW);
 	}
 
 	@Override
 	@Transactional
-	public void editAlert(UUID alertId, float targetPrice) {
+	public void editAlert(UUID alertId, float targetPrice, String username) {
 		validatePrice(targetPrice);
 
-		Alert alert = alertRepository.findAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
+		Alert alert = alertRepository.findAlertByAlertIdAndUsername(alertId, username).orElseThrow(() -> new NoSuchAlertException(alertId));
 
 		alert.setTargetPrice(targetPrice);
 		alert.setStatus(AlertStatus.NEW);
@@ -64,14 +67,14 @@ public class AlertServiceImpl implements AlertService {
 
 	@Override
 	@Transactional
-	public void deleteAlert(UUID alertId) {
-		alertRepository.deleteAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
+	public void deleteAlert(UUID alertId, String username) {
+		alertRepository.deleteAlertByAlertIdAndUsername(alertId, username).orElseThrow(() -> new NoSuchAlertException(alertId));
 	}
 
 	@Override
 	@Transactional
-	public void cancelAlert(UUID alertId) {
-		Alert alert = alertRepository.findAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
+	public void cancelAlert(UUID alertId, String username) {
+		Alert alert = alertRepository.findAlertByAlertIdAndUsername(alertId, username).orElseThrow(() -> new NoSuchAlertException(alertId));
 
 		if (alert.getStatus() != AlertStatus.NEW) {
 			throw new IllegalAlertStatusChangeException(alert.getStatus().getAlertText(), AlertStatus.CANCELLED.getAlertText());
@@ -82,24 +85,25 @@ public class AlertServiceImpl implements AlertService {
 
 	@Override
 	@Transactional
-	public void acknowledgeAlert(UUID alertId) {
-		Alert alert = alertRepository.findAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
+	public void acknowledgeAlert(UUID alertId, String username) {
+		Alert alert = alertRepository.findAlertByAlertIdAndUsername(alertId, username).orElseThrow(() -> new NoSuchAlertException(alertId));
 
 		if (alert.getStatus() != AlertStatus.TRIGGERED) {
-			throw new IllegalAlertStatusChangeException(alert.getStatus().getAlertText(), AlertStatus.CANCELLED.getAlertText());
+			throw new IllegalAlertStatusChangeException(alert.getStatus().getAlertText(), AlertStatus.ACKED.getAlertText());
 		}
 
 		alert.setStatus(AlertStatus.ACKED);
 	}
 
 	@Override
+	@Transactional
 	public void triggerAlert(UUID alertId) {
 		Alert alert = alertRepository.findAlertByAlertId(alertId).orElseThrow(() -> new NoSuchAlertException(alertId));
 
-		if (alert.getStatus() != AlertStatus.TRIGGERED) {
-			throw new IllegalAlertStatusChangeException(alert.getStatus().getAlertText(), AlertStatus.CANCELLED.getAlertText());
+		if (alert.getStatus() != AlertStatus.NEW) {
+			throw new IllegalAlertStatusChangeException(alert.getStatus().getAlertText(), AlertStatus.TRIGGERED.getAlertText());
 		}
 
-		alert.setStatus(AlertStatus.ACKED);
+		alert.setStatus(AlertStatus.TRIGGERED);
 	}
 }

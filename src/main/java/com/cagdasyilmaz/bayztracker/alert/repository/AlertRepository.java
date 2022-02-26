@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AlertRepository extends JpaRepository<Alert, UUID> {
 	Optional<Alert> findAlertByAlertId(UUID alertId);
-	Optional<Alert> deleteAlertByAlertId(UUID alertId);
+	Optional<Alert> findAlertByAlertIdAndUsername(UUID alertId, String username);
+	Optional<Alert> deleteAlertByAlertIdAndUsername(UUID alertId, String username);
 }

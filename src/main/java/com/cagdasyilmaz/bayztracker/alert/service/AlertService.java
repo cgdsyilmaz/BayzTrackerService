@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AlertService {
-	Alert getAlert(UUID alertId);
+	Alert getAlert(UUID alertId, String username);
 	List<Alert> getAlerts();
-	UUID createAlert(Alert alert);
-	void editAlert(UUID alertId, float targetPrice);
-	void deleteAlert(UUID alertId);
-	void cancelAlert(UUID alertId);
-	void acknowledgeAlert(UUID alertId);
+	UUID createAlert(Alert alert, String username);
+	void editAlert(UUID alertId, float targetPrice, String username);
+	void deleteAlert(UUID alertId, String username);
+	void cancelAlert(UUID alertId, String username);
+	void acknowledgeAlert(UUID alertId, String username);
 	void triggerAlert(UUID alertId);
 }
